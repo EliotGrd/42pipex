@@ -6,15 +6,11 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:23:50 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 23:08:51 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/29 22:51:18 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-static char	**split_cmd(const char *s)
-{
-}
 
 static void	alloc_cmd_array(t_pipex *ppx, size_t n)
 {
@@ -35,21 +31,21 @@ static void	fill_commands(t_pipex *ppx, char **av, int first, int last)
 {
 	size_t	i;
 	size_t	j;
-	int		arg;
+	int		cur;
 
 	i = 0;
-	arg = first;
-	while (arg <= last)
+	cur = first;
+	while (cur <= last)
 	{
-		ppx->cmds[i].argv = split_cmd(av[arg]);
-		if (ppx->cmds[i].argv == NULL /*|| ppx->cmds[i].argv[0] == NULL*/)
+		ppx->cmds[i].argv = split_cmd(av[cur]);
+		if (ppx->cmds[i].argv == NULL || ppx->cmds[i].argv[0] == NULL)
 			fatal_error("empty command", EINVAL);
 		j = 0;
 		while (ppx->cmds[i].argv[j] != NULL)
 			j++;
 		ppx->cmds[i].argc = j;
 		i++;
-		arg++;
+		cur++;
 	}
 }
 

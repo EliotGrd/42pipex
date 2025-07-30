@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 22:58:09 by egiraud          ###   ########.fr       */
+/*   Created: 2025/04/30 15:42:12 by egiraud           #+#    #+#             */
+/*   Updated: 2025/06/15 15:16:13 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/libft.h"
 
-// update libft_aio with ft_free
-// reuse makefile
-// change malloc to calloc but check security of calloc
-
-int	main(int ac, char **av)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	t_pipex	ppx;
+	unsigned char	*s1tmp;
+	unsigned char	*s2tmp;
 
-	ft_bzero((void *)&ppx, sizeof(ppx));
-	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
+	s1tmp = (unsigned char *) s1;
+	s2tmp = (unsigned char *) s2;
+	if (n == 0)
+		return (0);
+	while (n--)
+	{
+		if (*s1tmp != *s2tmp)
+			return (*s1tmp - *s2tmp);
+		s1tmp++;
+		s2tmp++;
+	}
 	return (0);
 }

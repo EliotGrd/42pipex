@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 22:58:09 by egiraud          ###   ########.fr       */
+/*   Created: 2025/04/30 01:43:09 by egiraud           #+#    #+#             */
+/*   Updated: 2025/06/15 15:15:09 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/libft.h"
 
-// update libft_aio with ft_free
-// reuse makefile
-// change malloc to calloc but check security of calloc
-
-int	main(int ac, char **av)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	t_pipex	ppx;
+	size_t	i;
+	size_t	dstlen;
+	size_t	srclen;
 
-	ft_bzero((void *)&ppx, sizeof(ppx));
-	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
-	return (0);
+	i = 0;
+	dstlen = ft_strlen(dst);
+	srclen = ft_strlen(src);
+	if (size <= dstlen)
+		return (size + srclen);
+	while (src[i] && dstlen + i < size - 1)
+	{
+		dst[dstlen + i] = src[i];
+		i++;
+	}
+	dst[dstlen + i] = '\0';
+	return (srclen + dstlen);
 }

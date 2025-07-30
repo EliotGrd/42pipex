@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 22:58:09 by egiraud          ###   ########.fr       */
+/*   Created: 2025/04/26 15:25:28 by egiraud           #+#    #+#             */
+/*   Updated: 2025/06/15 15:15:28 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/libft.h"
 
-// update libft_aio with ft_free
-// reuse makefile
-// change malloc to calloc but check security of calloc
-
-int	main(int ac, char **av)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	t_pipex	ppx;
+	unsigned int	i;
 
-	ft_bzero((void *)&ppx, sizeof(ppx));
-	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
-	return (0);
+	i = 0;
+	if (s && f)
+	{
+		while (s[i])
+		{
+			f(i, &s[i]);
+			i++;
+		}
+	}
 }

@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_iswspace.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 22:58:09 by egiraud          ###   ########.fr       */
+/*   Created: 2025/07/01 17:49:54 by egiraud           #+#    #+#             */
+/*   Updated: 2025/07/01 17:51:04 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
-
-// update libft_aio with ft_free
-// reuse makefile
-// change malloc to calloc but check security of calloc
-
-int	main(int ac, char **av)
+int	ft_iswspace(int c)
 {
-	t_pipex	ppx;
-
-	ft_bzero((void *)&ppx, sizeof(ppx));
-	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
-	return (0);
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	else
+		return (0);
 }

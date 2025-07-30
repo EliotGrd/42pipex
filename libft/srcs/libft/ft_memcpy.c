@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/24 22:58:09 by egiraud          ###   ########.fr       */
+/*   Created: 2025/04/29 15:24:00 by egiraud           #+#    #+#             */
+/*   Updated: 2025/06/15 15:16:09 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "../../includes/libft.h"
 
-// update libft_aio with ft_free
-// reuse makefile
-// change malloc to calloc but check security of calloc
-
-int	main(int ac, char **av)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	t_pipex	ppx;
+	unsigned char	*tmp_src;
+	unsigned char	*tmp_dest;
 
-	ft_bzero((void *)&ppx, sizeof(ppx));
-	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
-	return (0);
+	tmp_src = (unsigned char *) src;
+	tmp_dest = (unsigned char *) dest;
+	if (!dest && !src)
+		return (NULL);
+	while (n--)
+		*(tmp_dest++) = *(tmp_src++);
+	return (dest);
 }
