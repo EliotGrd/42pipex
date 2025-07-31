@@ -40,29 +40,30 @@ static int	count_args(const char *s)
 	return (arg_count);
 }
 
-static char	*extract_args(const char *s, const char *p)
+static char	*extract_args(char **p)
 {
-	int		i;
-	int		j;
+	char	*start;
 	int		arg_len;
 	char	*arg;
 
-	i
-	j = i;
-	if (s[i++] == '\'')
+	start = NULL;
+	start = *p;
+	if (*(*p)++ == '\'')
 	{
-		j++;
-		while (s[i] != '\'' && s[i])
-			i++;
+		start++;
+		while (*(*p) != '\'' && **p)
+			(*p)++;
+		arg_len = *p - start;
+		(*p)++;
 	}
 	else
-		while (s[i] != ' ' && s[i])
-			i++;
-	arg_len = i - j;
+	{
+		while (*(*p) != ' ' && **p)
+			(*p)++;
+		arg_len = *p - start;
+	}
 	arg = pmalloc(sizeof(char) * (arg_len + 1));
-	i = 0;
-	while (i < arg_len)
-		arg[i++] = s[j++];
+	ft_memcpy(arg, start, arg_len);
 	arg[arg_len] = 0;
 	return (arg);
 }
@@ -82,27 +83,27 @@ static void	check_quotes(const char *s)
 		fatal_error("quotes not closed", EINVAL);
 }
 
-char	**split_cmd(const char *s)
+char	**split_cmd(char *s)
 {
 	char	**argv;
 	int		arg_count;
-	//int		i;
-	const char	*p;
+	char	*p;
 	int		j;
 
+	p = NULL;
 	if (s[0] == 0)
 		fatal_error("empty command", EINVAL);
 	check_quotes(s);
 	arg_count = count_args(s);
 	argv = pmalloc(sizeof(char *) * (arg_count + 1));
-	//i = 0;
+	p = s;
 	j = -1;
 	while (++j < arg_count)
 	{
 		while (ft_iswspace(*p))
 			p++;
-		argv[j] = extract_args(s, &p);
-		//i += ft_strlen(argv[j]);
+		argv[j] = extract_args(&p);
+		// i += ft_strlen(argv[j]);
 	}
 	argv[arg_count] = 0;
 	// printf("%d", arg_count);

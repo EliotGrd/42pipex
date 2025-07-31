@@ -13,17 +13,27 @@
 #include "../includes/pipex.h"
 
 // update libft_aio with ft_free
-// reuse makefile
 // change malloc to calloc but check security of calloc
 
 int	main(int ac, char **av)
 {
+	int i;
 	t_pipex	ppx;
+	size_t j = 0;
 
 	ft_bzero((void *)&ppx, sizeof(ppx));
 	parse_args(&ppx, ac, av);
-	int i = 0;
-	while (ppx.cmds[0].argv[i])
-		printf("%s\n", ppx.cmds[0].argv[i++]);
+	printf("%zu cmds\n", ppx.cmd_count);
+	while (j < ppx.cmd_count)
+	{
+		i = 0;
+		while (ppx.cmds[j].argv[i])
+		{
+			printf("cmd %zu : arg %d : %s\n", j, i, ppx.cmds[j].argv[i]);
+			i++;
+		}
+		j++;
+		printf("\n");
+	}
 	return (0);
 }

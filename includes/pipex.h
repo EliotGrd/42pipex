@@ -54,7 +54,7 @@ typedef struct s_pipex
 
 /* PARSING */
 void		parse_args(t_pipex *px, int ac, char **av);
-char		**split_cmd(const char *s);
+char		**split_cmd(char *s);
 
 /* ERROR */
 void		fatal_error(const char *msg, int err);
