@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 20:40:55 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/21 01:11:22 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/31 18:47:39 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
-int					ft_iswspace(int c);
 size_t				ft_strlen(const char *s);
 void				ft_bzero(void *s, size_t n);
 int					ft_tolower(int c);
@@ -45,7 +44,6 @@ char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);
-int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strnstr(const char *haystack, const char *needle,
 						size_t len);
@@ -82,5 +80,8 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 /* Functions added */
 double				ft_atof(const char *nptr);
+int					ft_iswspace(int c);
+int					ft_strcmp(const char *s1, const char *s2);
 char				*ft_strcpy(char *dest, const char *src);
+void				ft_free(void **ptr);
 #endif

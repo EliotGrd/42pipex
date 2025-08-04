@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 22:46:21 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/30 14:16:17 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/08/03 21:08:33 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,7 @@ char	**split_cmd(char *s)
 		while (ft_iswspace(*p))
 			p++;
 		argv[j] = extract_args(&p);
-		// i += ft_strlen(argv[j]);
 	}
 	argv[arg_count] = 0;
-	// printf("%d", arg_count);
 	return (argv);
 }

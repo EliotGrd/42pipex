@@ -6,7 +6,7 @@ BON_PATH = srcs_bonus/
 LIBFT_PATH = libft/
 LIBFT_AR = $(LIBFT_PATH)libft.a
 
-SRC = error_h.c main.c parsing.c split_cmd.c
+SRC = error_h.c main.c parsing.c split_cmd.c get_env.c utils.c exec.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 DPD = $(SRC:.c=.d)

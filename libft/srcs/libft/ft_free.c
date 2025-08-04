@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 01:18:22 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/31 18:54:38 by egiraud          ###   ########.fr       */
+/*   Created: 2025/07/31 18:46:15 by egiraud           #+#    #+#             */
+/*   Updated: 2025/07/31 18:46:33 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
-#include <stddef.h>
 
-void	*ft_calloc(size_t elem, size_t size)
+void	ft_free(void **ptr)
 {
-	void	*tmp;
-
-	if (elem && size && elem > ((size_t)-1 / size))
-		return (NULL);
-	tmp = malloc(elem * size);
-	if (!tmp)
-		return (NULL);
-	ft_bzero(tmp, elem * size);
-	return (tmp);
+	if (!*ptr || !ptr)
+		return ;
+	free(*ptr);
+	*ptr = NULL;
 }

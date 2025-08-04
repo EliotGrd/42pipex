@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:23:50 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/29 22:51:18 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/07/31 20:20:19 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ static void	fill_commands(t_pipex *ppx, char **av, int first, int last)
 	while (cur <= last)
 	{
 		ppx->cmds[i].argv = split_cmd(av[cur]);
-		if (ppx->cmds[i].argv == NULL || ppx->cmds[i].argv[0] == NULL)
+		if (!ppx->cmds[i].argv || !ppx->cmds[i].argv[0])
 			fatal_error("empty command", EINVAL);
+		ppx->cmds[i].path = get_cmd_path(ppx->cmds[i].argv[0], ppx->path_dirs);
+		if (!ppx->cmds[i].path)
+			fatal_error("path not found", ENOENT);	
 		j = 0;
 		while (ppx->cmds[i].argv[j] != NULL)
 			j++;

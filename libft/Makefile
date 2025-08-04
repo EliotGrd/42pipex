@@ -12,7 +12,7 @@ SRCS = \
 	$(LP)ft_putendl_fd.c $(LP)ft_putnbr_fd.c $(LP)ft_putstr_fd.c $(LP)ft_split.c $(LP)ft_strchr.c \
 	$(LP)ft_strdup.c $(LP)ft_striteri.c $(LP)ft_strjoin.c $(LP)ft_strlcat.c $(LP)ft_strlcpy.c \
 	$(LP)ft_strlen.c $(LP)ft_strmapi.c $(LP)ft_strncmp.c $(LP)ft_strnstr.c $(LP)ft_strrchr.c \
-	$(LP)ft_strtrim.c $(LP)ft_substr.c $(LP)ft_tolower.c $(LP)ft_toupper.c $(LP)ft_strcmp.c\
+	$(LP)ft_strtrim.c $(LP)ft_substr.c $(LP)ft_tolower.c $(LP)ft_toupper.c $(LP)ft_strcmp.c $(LP)ft_free.c\
 	$(PP)ft_printf.c $(PP)ft_putnbr_base.c $(PP)ft_utils.c \
 	$(GP)get_next_line_bonus.c $(GP)get_next_line_utils_bonus.c
 
