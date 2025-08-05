@@ -12,12 +12,6 @@
 
 #include "../includes/pipex.h"
 
-//get path
-//
-//split les directories
-//
-//combine
-
 char	**fill_path_dirs(char **envp)
 {
 	char	**dirs;
@@ -31,7 +25,7 @@ char	**fill_path_dirs(char **envp)
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			path = envp[i] + 5;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -41,6 +35,8 @@ char	**fill_path_dirs(char **envp)
 		dirs[0] = NULL;
 	}
 	dirs = ft_split(path, ':');
+	if (!dirs)
+		fatal_error("malloc", EINVAL);
 	return (dirs);
 }
 
@@ -48,12 +44,12 @@ char	*get_cmd_path(char *cmd, char **dirs)
 {
 	int		i;
 	char	*to_test;
-	
+
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
-		else 
+		else
 			return (NULL);
 	}
 	i = -1;

@@ -49,6 +49,34 @@ void	print_dirs(t_pipex ppx)
 	}
 }
 
+void	ft_free_tab(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		ft_free((void **)&arr[i]);
+		i++;
+	}
+	ft_free((void **)&arr);
+}
+
+void	exit_clean(t_pipex *ppx)
+{
+	size_t	i;
+
+	i = 0;
+	ft_free_tab(ppx->path_dirs);
+	while (i < ppx->cmd_count)
+	{
+		ft_free_tab(ppx->cmds[i].argv);
+		ft_free((void **)&ppx->cmds[i].path);
+		i++;
+	}
+	ft_free((void **)&ppx->cmds);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex	ppx;
@@ -58,9 +86,20 @@ int	main(int ac, char **av, char **envp)
 	ppx.path_dirs = fill_path_dirs(envp);
 	parse_args(&ppx, ac, av);
 	exec_process(&ppx);
-
-	/* DEBUG */
-	cmds_info(ppx);
-	//print_dirs(ppx);
+	exit_clean(&ppx);
+	/*(void)av;
+	(void)ac;
+	(void)envp;
+	char *str = "les chats dansent aussi";
+	char **test = ft_split(str, ' ');
+	if (!test)
+		return (0);
+	int i = 0;
+	while (i < 3)
+	{
+		free(test[i]);
+		i++;
+	}
+	free(test);*/
 	return (0);
 }

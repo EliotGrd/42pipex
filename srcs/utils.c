@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 20:58:29 by egiraud           #+#    #+#             */
-/*   Updated: 2025/07/31 20:59:28 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:25:47 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,30 @@ char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	}
 	*p = 0;
 	return result;
+}
+
+int	heredoc_input(t_pipex *ppx)
+{
+	int		pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) == -1)
+		fatal_error("pipe", errno);
+	while (1)
+	{
+		write(1, "heredoc> ", 9);
+		line = get_next_line(STDIN_FILENO);
+		if (!line)
+			break ;
+		if (!ft_strncmp(line, ppx->limiter, ft_strlen(ppx->limiter))
+			&& line[ft_strlen(ppx->limiter)] == '\n')
+		{
+			ft_free((void **)&line);
+			break ;
+		}
+		write(pipefd[1], line, ft_strlen(line));
+		ft_free((void **)&line);
+	}
+	close(pipefd[1]);
+	return (pipefd[0]);
 }
