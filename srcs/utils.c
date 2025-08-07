@@ -35,7 +35,7 @@ char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 		p += ft_strlen(s3);
 	}
 	*p = 0;
-	return result;
+	return (result);
 }
 
 int	heredoc_input(t_pipex *ppx)
@@ -62,4 +62,31 @@ int	heredoc_input(t_pipex *ppx)
 	}
 	close(pipefd[1]);
 	return (pipefd[0]);
+}
+
+int	open_outfile(t_pipex *ppx)
+{
+	int	flags;
+	int	fd;
+
+	if (ppx->mode == HEREDOC)
+		flags = O_WRONLY | O_CREAT | O_APPEND;
+	else
+		flags = O_WRONLY | O_CREAT | O_TRUNC;
+	fd = open(ppx->outfile, flags, 0644);
+	if (fd == -1)
+		fatal_error("outfile openning", errno);
+	return (fd);
+}
+
+int	open_infile(t_pipex *ppx)
+{
+	int	fd;
+
+	if (ppx->mode == HEREDOC)
+		return (heredoc_input(ppx));
+	fd = open(ppx->infile, O_RDONLY);
+	if (fd == -1)
+		fatal_error(ppx->infile, errno);
+	return (fd);
 }

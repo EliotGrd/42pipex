@@ -14,8 +14,8 @@
 
 void	cmds_info(t_pipex ppx)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -26,20 +26,20 @@ void	cmds_info(t_pipex ppx)
 	while (j < ppx.cmd_count)
 	{
 		i = 0;
-		printf("%zu ARGS\n", ppx.cmds[j].argc); 
+		printf("%zu ARGS\n", ppx.cmds[j].argc);
 		while (ppx.cmds[j].argv[i])
 		{
 			printf("CMD[%zu] | ARG[%zu] : %s\n", j, i, ppx.cmds[j].argv[i]);
 			i++;
 		}
-		printf("PATH:%s\n\n",ppx.cmds[j].path);
+		printf("PATH:%s\n\n", ppx.cmds[j].path);
 		j++;
 	}
 }
 
 void	print_dirs(t_pipex ppx)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (ppx.path_dirs[i])
@@ -87,19 +87,5 @@ int	main(int ac, char **av, char **envp)
 	parse_args(&ppx, ac, av);
 	exec_process(&ppx);
 	exit_clean(&ppx);
-	/*(void)av;
-	(void)ac;
-	(void)envp;
-	char *str = "les chats dansent aussi";
-	char **test = ft_split(str, ' ');
-	if (!test)
-		return (0);
-	int i = 0;
-	while (i < 3)
-	{
-		free(test[i]);
-		i++;
-	}
-	free(test);*/
 	return (0);
 }

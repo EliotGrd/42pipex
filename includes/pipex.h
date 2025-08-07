@@ -59,6 +59,8 @@ char		*ft_strjoin3(const char *s1, const char *s2, const char *s3);
 /* EXEC */
 void		exec_process(t_pipex *ppx);
 int			heredoc_input(t_pipex *ppx);
+int			open_infile(t_pipex *ppx);
+int			open_outfile(t_pipex *ppx);
 
 /* ERROR */
 void		fatal_error(const char *msg, int err);

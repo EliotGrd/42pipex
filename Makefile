@@ -1,5 +1,6 @@
 
 NAME = pipex
+BONUS_NAME = pipex_bonus
 
 SRC_PATH = srcs/
 BON_PATH = srcs_bonus/
@@ -26,7 +27,15 @@ $(NAME): $(OBJ) $(INCS)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_AR) $(INC) -o $(NAME)
 	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
 
+bonus: NAME = pipex_bonus                                          # exe name
+bonus: SRC  = $(filter-out parsing.c,$(SRC)) parsing_bonus.c       # sources
+bonus: OBJ  = $(SRC:.c=.o)                                         # objects
+bonus: DPD  = $(SRC:.c=.d)                                         # deps
+bonus: all   
+
 -include $(DPD)
+
+$(BONUS):
 
 %.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
