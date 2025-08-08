@@ -64,11 +64,26 @@ static void	parse_normal(t_pipex *ppx, int ac, char **av)
 	fill_commands(ppx, av, 2, ac - 2);
 }
 
+static void	parse_heredoc(t_pipex *ppx, int ac, char **av)
+{
+	if (ac < 6)
+		fatal_error("not enough arguments", EINVAL);
+	ppx->mode = HEREDOC;
+	ppx->infile = NULL;
+	ppx->limiter = av[2];
+	ppx->outfile = av[ac - 1];
+	alloc_cmd_array(ppx, (size_t)(ac - 4));
+	fill_commands(ppx, av, 3, ac - 2);
+}
+
 void	parse_args(t_pipex *ppx, int ac, char **av)
 {
 	if (ppx == NULL)
 		fatal_error("parse_args", EINVAL);
 	if (ac < 2)
 		fatal_error("usage", EINVAL);
-	parse_normal(ppx, ac, av);
+	if (strcmp(av[1], "here_doc") == 0)
+		parse_heredoc(ppx, ac, av);
+	else
+		parse_normal(ppx, ac, av);
 }
