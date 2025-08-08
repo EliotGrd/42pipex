@@ -6,13 +6,13 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:22:40 by egiraud           #+#    #+#             */
-/*   Updated: 2025/08/03 21:07:58 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/08/08 21:38:24 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	cmds_info(t_pipex ppx)
+/*void	cmds_info(t_pipex ppx)
 {
 	size_t	i;
 	size_t	j;
@@ -47,7 +47,7 @@ void	print_dirs(t_pipex ppx)
 		printf("PATH_ARG[%zu] : %s\n", i, ppx.path_dirs[i]);
 		i++;
 	}
-}
+}*/
 
 void	ft_free_tab(char **arr)
 {
@@ -67,10 +67,12 @@ void	exit_clean(t_pipex *ppx)
 	size_t	i;
 
 	i = 0;
-	ft_free_tab(ppx->path_dirs);
+	if (ppx->path_dirs)
+		ft_free_tab(ppx->path_dirs);
 	while (i < ppx->cmd_count)
 	{
-		ft_free_tab(ppx->cmds[i].argv);
+		if (ppx->cmds[i].argv)
+			ft_free_tab(ppx->cmds[i].argv);
 		ft_free((void **)&ppx->cmds[i].path);
 		i++;
 	}
@@ -83,7 +85,7 @@ int	main(int ac, char **av, char **envp)
 
 	ppx.envp = envp;
 	ft_bzero((void *)&ppx, sizeof(ppx));
-	ppx.path_dirs = fill_path_dirs(envp);
+	ppx.path_dirs = fill_path_dirs(&ppx, envp);
 	parse_args(&ppx, ac, av);
 	exec_process(&ppx);
 	exit_clean(&ppx);

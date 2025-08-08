@@ -40,7 +40,7 @@ static int	count_args(const char *s)
 	return (arg_count);
 }
 
-static char	*extract_args(char **p)
+static char	*extract_args(t_pipex *ppx, char **p)
 {
 	char	*start;
 	int		arg_len;
@@ -62,13 +62,13 @@ static char	*extract_args(char **p)
 			(*p)++;
 		arg_len = *p - start;
 	}
-	arg = pmalloc(sizeof(char) * (arg_len + 1));
+	arg = pmalloc(ppx, sizeof(char) * (arg_len + 1));
 	ft_memcpy(arg, start, arg_len);
 	arg[arg_len] = 0;
 	return (arg);
 }
 
-static void	check_quotes(const char *s)
+static void	check_quotes(t_pipex *ppx, const char *s)
 {
 	int	quote_count;
 
@@ -80,10 +80,10 @@ static void	check_quotes(const char *s)
 		s++;
 	}
 	if (quote_count % 2 == 1)
-		fatal_error("quotes not closed", EINVAL);
+		fatal_error(ppx, "quotes not closed", EINVAL);
 }
 
-char	**split_cmd(char *s)
+char	**split_cmd(t_pipex *ppx, char *s)
 {
 	char	**argv;
 	int		arg_count;
@@ -92,17 +92,17 @@ char	**split_cmd(char *s)
 
 	p = NULL;
 	if (s[0] == 0)
-		fatal_error("empty command", EINVAL);
-	check_quotes(s);
+		fatal_error(ppx, "empty command", EINVAL);
+	check_quotes(ppx, s);
 	arg_count = count_args(s);
-	argv = pmalloc(sizeof(char *) * (arg_count + 1));
+	argv = pmalloc(ppx, sizeof(char *) * (arg_count + 1));
 	p = s;
 	j = -1;
 	while (++j < arg_count)
 	{
 		while (ft_iswspace(*p))
 			p++;
-		argv[j] = extract_args(&p);
+		argv[j] = extract_args(ppx, &p);
 	}
 	argv[arg_count] = 0;
 	return (argv);

@@ -6,7 +6,7 @@ SRC_PATH = srcs/
 LIBFT_PATH = libft/
 LIBFT_AR = $(LIBFT_PATH)libft.a
 
-SRC = error_h.c main.c parsing.c split_cmd.c get_env.c utils.c exec.c
+SRC = main.c parsing.c split_cmd.c get_env.c utils.c exec.c error_handler.c
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJ = $(SRC:.c=.o)
 DPD = $(SRC:.c=.d)
@@ -26,8 +26,11 @@ $(NAME): $(OBJ) $(INCS)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_AR) $(INC) -o $(NAME)
 	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
 
-bonus:
+bonus: $(OBJ) $(INCS)
 	@echo "\n$(PURPLE)  BONUS MODE ACTIVATED \n$(NC)"
+	@echo "\n$(PURPLE)  Compiling Pipex_bonus...$(NC)"
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_AR) $(INC) -o $(BONUS_NAME)
+	@echo "\n$(PURPLE)  Ready ✓$(NC)\n"
 
 -include $(DPD)
 
@@ -49,7 +52,7 @@ clean:
 fclean: clean
 	@echo "\n$(PURPLE)  Cleaning Pipex...$(NC)"
 	@$(RM) $(NAME)
-	@$(RM) $(NAME_BON)
+	@$(RM) $(BONUS_NAME)
 	@make -s fclean -C $(LIBFT_PATH)
 	@echo "\n$(PURPLE)  Done ✓$(NC)"
 

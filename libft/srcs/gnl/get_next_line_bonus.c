@@ -80,6 +80,19 @@ char	*read_to(int fd, char *stash)
 	return (stash);
 }
 
+/* Really tragh fix to a one byte leak problem about heredocs in pipex */
+void	free_all(char **stash)
+{
+	int	i;
+
+	i = 0;
+	while (i < 1024)
+	{
+		free(stash[i]);
+		i++;
+	}
+}
+
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -87,7 +100,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd > 1024 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(stash[fd]);
+		free_all(stash);
 		return (stash[fd] = NULL, NULL);
 	}
 	if (!stash[fd])

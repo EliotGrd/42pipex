@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 18:49:21 by egiraud           #+#    #+#             */
-/*   Updated: 2025/08/05 20:23:47 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/08/08 21:36:12 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static void	child(t_pipex *ppx, size_t i, int prev_fd, int *pipefd)
 	int	outfile;
 
 	if (dup2(prev_fd, STDIN_FILENO) == -1)
-		fatal_error("dup2", errno);
+		fatal_error(ppx, "dup2", errno);
 	if (pipefd && dup2(pipefd[1], STDOUT_FILENO) == -1)
-		fatal_error("dup2", errno);
+		fatal_error(ppx, "dup2", errno);
 	if (!pipefd)
 	{
 		outfile = open_outfile(ppx);
 		if (dup2(outfile, STDOUT_FILENO) == -1)
-			fatal_error("dup2", errno);
+			fatal_error(ppx, "dup2", errno);
 		close(outfile);
 	}
 	if (prev_fd != -1)
@@ -35,7 +35,7 @@ static void	child(t_pipex *ppx, size_t i, int prev_fd, int *pipefd)
 		close(pipefd[1]);
 	}
 	execve(ppx->cmds[i].path, ppx->cmds[i].argv, ppx->envp);
-	fatal_error(ppx->cmds[i].argv[0], errno);
+	fatal_error(ppx, ppx->cmds[i].path, errno);
 }
 
 /*void	exec_process(t_pipex *ppx)
@@ -47,7 +47,7 @@ static void	child(t_pipex *ppx, size_t i, int prev_fd, int *pipefd)
 	while (i < ppx->cmd_count)
 	{
 		pipeptr = NULL;
-		if (i + 1 < ppx->cmd_count)
+		if (i + 1 < ppx->cmd_count)`
 		{
 			if (pipe(pipefd) == -1)
 				fatal_error("pipe", errno);
@@ -71,13 +71,13 @@ static void	child(t_pipex *ppx, size_t i, int prev_fd, int *pipefd)
 	while (wait(NULL) > 0)
 		;
 }*/
-
-static int	create_pipe_if_needed(size_t idx, size_t total, int pipefd[2])
+static int	create_pipe_if_needed(t_pipex *ppx, size_t idx, size_t total,
+		int pipefd[2])
 {
 	if (idx + 1 == total)
 		return (0);
 	if (pipe(pipefd) == -1)
-		fatal_error("pipe", errno);
+		fatal_error(ppx, "pipe", errno);
 	return (1);
 }
 
@@ -87,7 +87,7 @@ static pid_t	spawn_child(t_pipex *ppx, size_t idx, int prev_fd, int *pipeptr)
 
 	pid = fork();
 	if (pid == -1)
-		fatal_error("fork", errno);
+		fatal_error(ppx, "fork", errno);
 	if (pid == 0)
 		child(ppx, idx, prev_fd, pipeptr);
 	return (pid);
@@ -116,7 +116,7 @@ void	exec_process(t_pipex *ppx)
 	while (i < ppx->cmd_count)
 	{
 		pipeptr = NULL;
-		if (create_pipe_if_needed(i, ppx->cmd_count, pipefd))
+		if (create_pipe_if_needed(ppx, i, ppx->cmd_count, pipefd))
 			pipeptr = pipefd;
 		ppx->cmds[i].pid = spawn_child(ppx, i, prev_fd, pipeptr);
 		close_parent_ends(&prev_fd, pipeptr);

@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-char	**fill_path_dirs(char **envp)
+char	**fill_path_dirs(t_pipex *ppx, char **envp)
 {
 	char	**dirs;
 	char	*path;
@@ -31,31 +31,26 @@ char	**fill_path_dirs(char **envp)
 	}
 	if (!*path || !path)
 	{
-		dirs = pmalloc(sizeof(char *) * 1);
+		dirs = pmalloc(ppx, sizeof(char *) * 1);
 		dirs[0] = NULL;
 	}
 	dirs = ft_split(path, ':');
 	if (!dirs)
-		fatal_error("malloc", EINVAL);
+		fatal_error(ppx, "malloc", EINVAL);
 	return (dirs);
 }
 
-char	*get_cmd_path(char *cmd, char **dirs)
+char	*get_cmd_path(t_pipex *ppx, char *cmd, char **dirs)
 {
 	int		i;
 	char	*to_test;
 
-	if (ft_strchr(cmd, '/'))
-	{
-		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
-		else
-			return (NULL);
-	}
+	if (ft_strchr(cmd, '/') || !dirs)
+		return (ft_strdup(cmd));
 	i = -1;
 	while (dirs[++i])
 	{
-		to_test = ft_strjoin3(dirs[i], "/", cmd);
+		to_test = ft_strjoin3(ppx, dirs[i], "/", cmd);
 		if (access(to_test, X_OK) == 0)
 			return (to_test);
 		free(to_test);

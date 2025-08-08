@@ -6,7 +6,7 @@
 /*   By: egiraud <egiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 22:19:32 by egiraud           #+#    #+#             */
-/*   Updated: 2025/08/05 19:24:50 by egiraud          ###   ########.fr       */
+/*   Updated: 2025/08/08 21:38:21 by egiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ typedef struct s_pipex
 
 /* PARSING */
 void		parse_args(t_pipex *ppx, int ac, char **av);
-char		**split_cmd(char *s);
-char		*get_cmd_path(char *cmd, char **dir);
-char		**fill_path_dirs(char **envp);
-char		*ft_strjoin3(const char *s1, const char *s2, const char *s3);
+char		**split_cmd(t_pipex *ppx, char *s);
+char		*get_cmd_path(t_pipex *ppx, char *cmd, char **dir);
+char		**fill_path_dirs(t_pipex *ppx, char **envp);
+char		*ft_strjoin3(t_pipex *ppx, const char *s1, const char *s2,
+				const char *s3);
 
 /* EXEC */
 void		exec_process(t_pipex *ppx);
@@ -63,9 +64,11 @@ int			open_infile(t_pipex *ppx);
 int			open_outfile(t_pipex *ppx);
 
 /* ERROR */
-void		fatal_error(const char *msg, int err);
-void		*pmalloc(size_t bytes);
+void		fatal_error(t_pipex *ppx, const char *msg, int err);
+void		*pmalloc(t_pipex *ppx, size_t bytes);
 void		ft_free(void **ptr);
 void		ft_free_tab(char **arr);
+void		exit_clean(t_pipex *ppx);
+void		cmd_not_found(t_pipex *ppx, int i);
 
 #endif

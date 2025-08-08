@@ -12,12 +12,13 @@
 
 #include "../includes/pipex.h"
 
-char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
+char	*ft_strjoin3(t_pipex *ppx, const char *s1, const char *s2,
+		const char *s3)
 {
 	char	*result;
 	char	*p;
 
-	result = pmalloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	result = pmalloc(ppx, ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
 	p = result;
 	if (s1)
 	{
@@ -44,7 +45,7 @@ int	heredoc_input(t_pipex *ppx)
 	char	*line;
 
 	if (pipe(pipefd) == -1)
-		fatal_error("pipe", errno);
+		fatal_error(ppx, "pipe", errno);
 	while (1)
 	{
 		write(1, "heredoc> ", 9);
@@ -54,6 +55,7 @@ int	heredoc_input(t_pipex *ppx)
 		if (!ft_strncmp(line, ppx->limiter, ft_strlen(ppx->limiter))
 			&& line[ft_strlen(ppx->limiter)] == '\n')
 		{
+			get_next_line(-1);
 			ft_free((void **)&line);
 			break ;
 		}
@@ -75,7 +77,7 @@ int	open_outfile(t_pipex *ppx)
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 	fd = open(ppx->outfile, flags, 0644);
 	if (fd == -1)
-		fatal_error("outfile openning", errno);
+		fatal_error(ppx, "outfile openning", errno);
 	return (fd);
 }
 
@@ -87,6 +89,6 @@ int	open_infile(t_pipex *ppx)
 		return (heredoc_input(ppx));
 	fd = open(ppx->infile, O_RDONLY);
 	if (fd == -1)
-		fatal_error(ppx->infile, errno);
+		fatal_error(ppx, ppx->infile, errno);
 	return (fd);
 }
