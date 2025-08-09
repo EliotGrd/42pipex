@@ -35,18 +35,6 @@
 		printf("PATH:%s\n\n", ppx.cmds[j].path);
 		j++;
 	}
-}
-
-void	print_dirs(t_pipex ppx)
-{
-	size_t	i;
-
-	i = 0;
-	while (ppx.path_dirs[i])
-	{
-		printf("PATH_ARG[%zu] : %s\n", i, ppx.path_dirs[i]);
-		i++;
-	}
 }*/
 
 void	ft_free_tab(char **arr)
