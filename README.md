@@ -2,7 +2,7 @@
 	Pipex
 </h1>
 <p align="center">
-	A prelude to minishell, reproduce pipes and basic exec
+	A prelude to minishell, reproduct pipes and basic exec
 </p>
 
 ## 📊 How it works ?
