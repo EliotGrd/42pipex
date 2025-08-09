@@ -38,39 +38,6 @@ static void	child(t_pipex *ppx, size_t i, int prev_fd, int *pipefd)
 	fatal_error(ppx, ppx->cmds[i].path, errno);
 }
 
-/*void	exec_process(t_pipex *ppx)
-{
-	i = 0;
-	pipefd[0] = -1;
-	pipefd[1] = -1;
-	prev_fd = open_infile(ppx);
-	while (i < ppx->cmd_count)
-	{
-		pipeptr = NULL;
-		if (i + 1 < ppx->cmd_count)`
-		{
-			if (pipe(pipefd) == -1)
-				fatal_error("pipe", errno);
-			pipeptr = pipefd;
-		}
-		ppx->cmds[i].pid = fork();
-		if (ppx->cmds[i].pid == -1)
-			fatal_error("fork", errno);
-		if (ppx->cmds[i].pid == 0)
-			child(ppx, i, prev_fd, pipeptr);
-		if (prev_fd != -1)
-			close(prev_fd);
-		if (pipeptr)
-			close(pipeptr[1]);
-		if (pipeptr)
-			prev_fd = pipeptr[0];
-		else
-			prev_fd = -1;
-		i++;
-	}
-	while (wait(NULL) > 0)
-		;
-}*/
 static int	create_pipe_if_needed(t_pipex *ppx, size_t idx, size_t total,
 		int pipefd[2])
 {
